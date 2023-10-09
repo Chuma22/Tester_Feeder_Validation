@@ -8,7 +8,7 @@ from Phidget22.PhidgetException import PhidgetException
 from time import sleep
 import asyncio
 import concurrent.futures
-global devicesSerialNumbersTester, devicesSerialNumbersValidation 
+global devicesSerialNumbersTester, devicesSerialNumbersValidation, ValidationRielSingle
 
 devicesSerialNumbersTester = {
         "MOD": "TESTER",
@@ -34,6 +34,15 @@ devicesSerialNumbersValidation = {
         "Phidgets1067_Stepper_Vertical_05": "",
         "Phidgets1067_Stepper_Riel_06": "",
         "Phidgets1067_Stepper_Vertical_06": "",
+
+}
+ValidationRielSingle = {
+        "MOD": "TESTER",
+        "Phidget1012_Control_01": "670593",
+        "Phidgets1067_Stepper_Riel_01": "720417",
+        "Phidgets1067_Stepper_Vertical_01": "720415",
+        "Phidgets1047_Encoder_01": "656814"
+
 
 }
 
@@ -125,20 +134,10 @@ async def runOutput(digitalOutput):
             await outputOn(outputs)
             await outputOff(outputs)
 
-async def testStepperEncoder(stepper_Test_Encoder,serial_Number_Stepper_Encoder,encoder_Test,channel_Encoder):
+async def testStepperEncoder(stepper_Test_Encoder,encoder_Test,digital_Inputs:list,first_board_Position:bool):
     encoderTest = encoder_Test
     stepperTest = stepper_Test_Encoder
-    serialNumberStepper = serial_Number_Stepper_Encoder
-    channelEncoder = channel_Encoder
 
-    encoderTest.setChannel(channelEncoder)
-    encoderTest.openWaitForAttachment(1000)
-    encoderTest.setEnabled(True)
-    encoderTest.setDataInterval(8)
-
-    stepperTest.setDeviceSerialNumber(serialNumberStepper)
-    stepperTest.openWaitForAttachment(1000)
-    stepperTest.setCurrentLimit(2.8)
     encoder01_position = encoderTest.getPosition()
     giro = 0
     while True:
@@ -159,14 +158,16 @@ async def testStepperEncoder(stepper_Test_Encoder,serial_Number_Stepper_Encoder,
                 stepperTest.setEngaged(False)
                 sleep(1)
                 giro = 0
+                break
 
-async def testStepperEncoderHome(stepper_Test_Encoder,digital_Inputs,first_board_Position):
+async def testStepperEncoderHome(stepper_Test_Encoder,digital_Inputs:list,first_board_Position:bool):
 
     stepperTest = stepper_Test_Encoder
     digitalInputs = digital_Inputs
     boardPosition = first_board_Position
     if boardPosition == True:
         homeVertical  = digitalInputs[5]
+        homeVerticalFlag = homeVertical.getState() 
     else:
         homeVertical  = digitalInputs[13]
         homeVerticalFlag = homeVertical.getState() 
@@ -176,7 +177,7 @@ async def testStepperEncoderHome(stepper_Test_Encoder,digital_Inputs,first_board
             break
         else:
             stepperTest.setControlMode(StepperControlMode.CONTROL_MODE_RUN)
-            stepperTest.setVelocityLimit(1500)
+            stepperTest.setVelocityLimit(-1500)
             stepperTest.setEngaged(True)
             homeVerticalFlag = homeVertical.getState() 
 
@@ -187,6 +188,7 @@ async def testStepperHome(stepper_Test, digital_Inputs:list,first_board_Position
     boardPosition = first_board_Position
     if boardPosition == True:
         homeVertical  = digitalInputs[6]
+        homeVerticalFlag = homeVertical.getState() 
     else:
         homeVertical  = digitalInputs[14]
         homeVerticalFlag = homeVertical.getState() 
@@ -212,16 +214,8 @@ async def testStepperHome(stepper_Test, digital_Inputs:list,first_board_Position
     # Position_Stepper04 = stepperTest.getPosition()
     # stepperTest.setEngaged(True)
 
-async def testStepper(stepper_Test,serial_Number_Stepper):
-    global inputs,inputs2
-
-    
+async def testStepper(stepper_Test,digital_Inputs:list,first_board_Position:bool):
     stepperTest = stepper_Test
-    serialNumberStepper = serial_Number_Stepper
-
-    stepperTest.setDeviceSerialNumber(serialNumberStepper)
-    stepperTest.openWaitForAttachment(1000)
-    stepperTest.setCurrentLimit(1.8)
     stepper_position = stepperTest.getPosition()
     moveStepper = 500
 
@@ -252,11 +246,11 @@ async def testStepper(stepper_Test,serial_Number_Stepper):
                 break
     sleep(0.1)
 
-async def testGrepper(digital_Outputs,digital_Inputs,first_board_Position):
+async def testGrepper(digital_Outputs:list,digital_Inputs:list,first_board_Position:bool):
     boardPosition = first_board_Position
     digitalOutputs = digital_Outputs
     digitalInputs = digital_Inputs
-    if boardPosition == True:
+    if boardPosition == False:
         grepper = digitalOutputs[1]
         grepperOpen = digitalInputs[11]
         grepperClose = digitalInputs[12]        
@@ -275,6 +269,75 @@ async def testGrepper(digital_Outputs,digital_Inputs,first_board_Position):
         if grepperClose and stepCero:
             break
 
+async def testInputs(digital_Inputs:list,first_board_Position:bool):
+    
+        boardPosition = first_board_Position
+        digitalInputs = digital_Inputs
+        step = 0
+        print("Sensor de pieza en gripper")
+
+        while True:
+            if boardPosition == True:
+                if step == 0:
+                    readInput = digitalInputs[0].getState()
+                    if readInput == True:
+                        print("OK")
+                        print("Señal de pieza PASS")
+                        step = 1
+                if step == 1:
+                    readInput = digitalInputs[1].getState()
+                    if readInput == True:
+                        print("OK")
+                        print("Señal de pieza FAIL")
+                        step = 2
+                if step == 2:
+                    readInput = digitalInputs[2].getState()
+                    if readInput == True:
+                        print("OK")
+                        print("Sensor de Conveyor entrada ")
+                        step = 3
+                if step == 3:
+                    readInput = digitalInputs[7].getState()
+                    if readInput == True:
+                        print("OK ")
+                        print("Sensor de Conveyor salida")
+                        step = 4
+                if step == 4:#TODO modificar este parte para dos Phidgets
+                    readInput = digitalInputs[8].getState()
+                    if readInput == True:
+                        print("OK ")
+                        step = 0
+                        break                                 
+            else:
+                if step == 0:
+                    readInput = digitalInputs[8].getState()
+                    if readInput == True:
+                        print("Sensor de pieza en gripe energizado")
+                        step = 1
+                if step == 1:
+                    readInput = digitalInputs[9].getState()
+                    if readInput == True:
+                        print("Señal de pieza PASS")
+                        step = 2
+                if step == 2:
+                    readInput = digitalInputs[10].getState()
+                    if readInput == True:
+                        print("Señal Pieza Fail")
+                        step = 3
+                if step == 3:
+                    readInput = digitalInputs[15].getState()
+                    if readInput == True:
+                        print("Sensor de Conveyor entrada energizado ")
+                        step = 4
+                if step == 4:#TODO modificar este parte para dos Phidgets
+                    readInput = digitalInputs[8].getState()
+                    if readInput == True:
+                        print("Sensor de Conveyor salida energizado ")
+                        step = 0 
+                        break  
+            
+
+    
 async def initialization(devicesSerialNumbers: dict):
     
     global inputs, outputs, inputs2, outputs2,inputs3,outputs3,inputs4,outputs4,offsetB4,EncoderA,steppersEncoder,steppersSingle
@@ -292,9 +355,17 @@ async def initialization(devicesSerialNumbers: dict):
     serialNumber = int(devicesSerialNumbers["Phidget1012_Securitas_03"]) # MOD D
     outputs3,inputs3 = startIO(serialNumber)
     #movimiento de motores
-    serialNumberEncoderA = int(devicesSerialNumbers["Phidgets1047_Encoder_01"]) # Encoder
-    EncoderA = startEncoder(serialNumberEncoderA)
-    steppersEncoder,steppersSingle = startSteppers(devicesSerialNumbersTester)
+    # serialNumberEncoderA = int(devicesSerialNumbers["Phidgets1047_Encoder_01"]) # Encoder
+    # EncoderA = startEncoder(serialNumberEncoderA)
+    # steppersEncoder,steppersSingle = startSteppers(devicesSerialNumbers)
+    await outputOn(outputs)
+    await outputOn(outputs3)
+    # await testGrepper(outputs,inputs,first_board_Position = True)
+    # await testStepperHome(steppersSingle[0],inputs,first_board_Position = True)
+    # await testStepperEncoderHome(steppersEncoder[0],inputs,first_board_Position=True)
+    sleep(2)
+    # await testStepperEncoder(steppersEncoder[0],EncoderA[0],inputs,first_board_Position = True)
+    # await testInputs(inputs,first_board_Position=True)
 
 async def testModTester(devicesSerialNumbers: dict):
     global inputs, outputs, inputs2, outputs2,inputs3,outputs3,inputs4,outputs4,offsetB4,EncoderA,steppersEncoder,steppersSingle
@@ -336,4 +407,3 @@ if __name__ == "__main__":
     # loop = asyncio.get_event_loop()
 #    loop.run_until_complete(main())
     asyncio.run(main())
-

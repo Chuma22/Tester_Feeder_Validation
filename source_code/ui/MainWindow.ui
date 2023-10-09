@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1568</width>
+    <height>785</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <widget class="QPushButton" name="startPushButton">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>510</y>
+      <width>121</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Inicio</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="stopPushButton">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>590</y>
+      <width>121</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Detener</string>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="inputLcdNumber">
+    <property name="geometry">
+     <rect>
+      <x>1180</x>
+      <y>170</y>
+      <width>151</width>
+      <height>81</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="messagesTextBrowser">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>1511</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 0);</string>
+    </property>
+    <property name="html">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:36pt; font-weight:700;&quot;&gt;STOP!!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="imagesLabel">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>110</y>
+      <width>849</width>
+      <height>665</height>
+     </rect>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::PreventContextMenu</enum>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="../resources/resources.qrc">:/Images/Tester.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="RestartPushButton">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>670</y>
+      <width>121</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Restablecer </string>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="outputLcdNumber">
+    <property name="geometry">
+     <rect>
+      <x>1180</x>
+      <y>300</y>
+      <width>151</width>
+      <height>81</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLCDNumber" name="railLcdNumber">
+    <property name="geometry">
+     <rect>
+      <x>1180</x>
+      <y>440</y>
+      <width>151</width>
+      <height>81</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="unitsIntLabel">
+    <property name="geometry">
+     <rect>
+      <x>1180</x>
+      <y>130</y>
+      <width>141</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Piezas Entrada</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="unitsOutLabel">
+    <property name="geometry">
+     <rect>
+      <x>1190</x>
+      <y>270</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Piezas Salida</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="priorityRailLabel">
+    <property name="geometry">
+     <rect>
+      <x>1190</x>
+      <y>400</y>
+      <width>101</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Prioridad del riel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="timeProductionLabel">
+    <property name="geometry">
+     <rect>
+      <x>1180</x>
+      <y>560</y>
+      <width>141</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Tiempo de produccion </string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>120</y>
+      <width>131</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Resultados previos </string>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="timeProductionTextBrowser">
+    <property name="geometry">
+     <rect>
+      <x>1170</x>
+      <y>600</y>
+      <width>181</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="html">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;0 S&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>140</y>
+      <width>241</width>
+      <height>688</height>
+     </rect>
+    </property>
+    <layout class="QFormLayout" name="lastResultQFrom">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetDefaultConstraint</enum>
+     </property>
+     <property name="fieldGrowthPolicy">
+      <enum>QFormLayout::ExpandingFieldsGrow</enum>
+     </property>
+     <property name="rowWrapPolicy">
+      <enum>QFormLayout::WrapLongRows</enum>
+     </property>
+     <property name="labelAlignment">
+      <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+     </property>
+     <property name="formAlignment">
+      <set>Qt::AlignJustify|Qt::AlignTop</set>
+     </property>
+     <property name="horizontalSpacing">
+      <number>15</number>
+     </property>
+     <property name="verticalSpacing">
+      <number>18</number>
+     </property>
+     <property name="leftMargin">
+      <number>22</number>
+     </property>
+     <property name="topMargin">
+      <number>12</number>
+     </property>
+     <property name="rightMargin">
+      <number>18</number>
+     </property>
+     <property name="bottomMargin">
+      <number>14</number>
+     </property>
+     <item row="0" column="0">
+      <widget class="QLabel" name="testN1Label">
+       <property name="text">
+        <string>Tester Nido1</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="testN2Label">
+       <property name="text">
+        <string>Tester Nido 2</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="resultN1Label">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="font">
+        <font>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color:rgb(170, 170, 127)</string>
+       </property>
+       <property name="text">
+        <string>Null</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="resultN2Label">
+       <property name="styleSheet">
+        <string notr="true">background-color:rgb(170, 170, 127)</string>
+       </property>
+       <property name="text">
+        <string>Null</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="testN3Label">
+       <property name="text">
+        <string>Tester Nido 3</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLabel" name="testN4Label">
+       <property name="text">
+        <string>Tester Nido 4</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="resultN3Label">
+       <property name="styleSheet">
+        <string notr="true">background-color:rgb(170, 170, 127)</string>
+       </property>
+       <property name="text">
+        <string>Null</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLabel" name="resultN4Label">
+       <property name="styleSheet">
+        <string notr="true">background-color:rgb(170, 170, 127)</string>
+       </property>
+       <property name="text">
+        <string>Null</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="testN5Label">
+       <property name="text">
+        <string>Tester Nido 5</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLabel" name="testN6Label">
+       <property name="text">
+        <string>Tester Nido 6</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="resultN5Label">
+       <property name="styleSheet">
+        <string notr="true">background-color:rgb(170, 170, 127)</string>
+       </property>
+       <property name="text">
+        <string>Null</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QLabel" name="resultN6Label">
+       <property name="styleSheet">
+        <string notr="true">background-color:rgb(170, 170, 127)</string>
+       </property>
+       <property name="text">
+        <string>Null</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="testN7Label">
+       <property name="text">
+        <string>Tester Nido 7</string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="QLabel" name="testN8Label">
+       <property name="text">
+        <string>Tester Nido 8</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0">
+      <widget class="QLabel" name="resultN7Label">
+       <property name="styleSheet">
+        <string notr="true">background-color:rgb(170, 170, 127)</string>
+       </property>
+       <property name="text">
+        <string>Null</string>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="1">
+      <widget class="QLabel" name="resultN8Label">
+       <property name="styleSheet">
+        <string notr="true">background-color:rgb(170, 170, 127)</string>
+       </property>
+       <property name="text">
+        <string>Null</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="0">
+      <widget class="QLabel" name="validationN1Label">
+       <property name="text">
+        <string>Validacion Nido 1</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
+      <widget class="QLabel" name="validationN2Label">
+       <property name="text">
+        <string>Validacion Nido2</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="0">
+      <widget class="QLabel" name="resultValidationN1Label">
+       <property name="styleSheet">
+        <string notr="true">background-color:rgb(170, 170, 127)</string>
+       </property>
+       <property name="text">
+        <string>Null</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="1">
+      <widget class="QLabel" name="resultValidationN2Label">
+       <property name="styleSheet">
+        <string notr="true">background-color:rgb(170, 170, 127)</string>
+       </property>
+       <property name="text">
+        <string>Null</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <zorder>imagesLabel</zorder>
+   <zorder>startPushButton</zorder>
+   <zorder>stopPushButton</zorder>
+   <zorder>inputLcdNumber</zorder>
+   <zorder>messagesTextBrowser</zorder>
+   <zorder>RestartPushButton</zorder>
+   <zorder>outputLcdNumber</zorder>
+   <zorder>railLcdNumber</zorder>
+   <zorder>unitsIntLabel</zorder>
+   <zorder>unitsOutLabel</zorder>
+   <zorder>priorityRailLabel</zorder>
+   <zorder>timeProductionLabel</zorder>
+   <zorder>label_7</zorder>
+   <zorder>testN1Label</zorder>
+   <zorder>testN2Label</zorder>
+   <zorder>testN4Label</zorder>
+   <zorder>testN3Label</zorder>
+   <zorder>testN5Label</zorder>
+   <zorder>testN6Label</zorder>
+   <zorder>testN8Label</zorder>
+   <zorder>testN7Label</zorder>
+   <zorder>validationN1Label</zorder>
+   <zorder>validationN2Label</zorder>
+   <zorder>resultN2Label</zorder>
+   <zorder>resultN1Label</zorder>
+   <zorder>resultN3Label</zorder>
+   <zorder>resultN4Label</zorder>
+   <zorder>resultN5Label</zorder>
+   <zorder>resultN6Label</zorder>
+   <zorder>resultN7Label</zorder>
+   <zorder>resultN8Label</zorder>
+   <zorder>resultValidationN1Label</zorder>
+   <zorder>resultValidationN2Label</zorder>
+   <zorder>timeProductionTextBrowser</zorder>
+   <zorder></zorder>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1568</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources>
+  <include location="../resources/resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>
