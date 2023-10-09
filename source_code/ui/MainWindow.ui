@@ -183,7 +183,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
      <string>Tiempo de produccion </string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_7">
+   <widget class="QLabel" name="lastResultLabel">
     <property name="geometry">
      <rect>
       <x>80</x>
@@ -216,13 +216,13 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;0 S&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>30</x>
       <y>140</y>
-      <width>241</width>
-      <height>688</height>
+      <width>211</width>
+      <height>361</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="lastResultQFrom">
@@ -454,29 +454,9 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <zorder>unitsOutLabel</zorder>
    <zorder>priorityRailLabel</zorder>
    <zorder>timeProductionLabel</zorder>
-   <zorder>label_7</zorder>
-   <zorder>testN1Label</zorder>
-   <zorder>testN2Label</zorder>
-   <zorder>testN4Label</zorder>
-   <zorder>testN3Label</zorder>
-   <zorder>testN5Label</zorder>
-   <zorder>testN6Label</zorder>
-   <zorder>testN8Label</zorder>
-   <zorder>testN7Label</zorder>
-   <zorder>validationN1Label</zorder>
-   <zorder>validationN2Label</zorder>
-   <zorder>resultN2Label</zorder>
-   <zorder>resultN1Label</zorder>
-   <zorder>resultN3Label</zorder>
-   <zorder>resultN4Label</zorder>
-   <zorder>resultN5Label</zorder>
-   <zorder>resultN6Label</zorder>
-   <zorder>resultN7Label</zorder>
-   <zorder>resultN8Label</zorder>
-   <zorder>resultValidationN1Label</zorder>
-   <zorder>resultValidationN2Label</zorder>
+   <zorder>lastResultLabel</zorder>
    <zorder>timeProductionTextBrowser</zorder>
-   <zorder></zorder>
+   <zorder>layoutWidget</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

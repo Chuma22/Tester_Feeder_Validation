@@ -68,16 +68,16 @@ class Ui_MainWindow(object):
         self.timeProductionLabel = QLabel(self.centralwidget)
         self.timeProductionLabel.setObjectName(u"timeProductionLabel")
         self.timeProductionLabel.setGeometry(QRect(1180, 560, 141, 20))
-        self.label_7 = QLabel(self.centralwidget)
-        self.label_7.setObjectName(u"label_7")
-        self.label_7.setGeometry(QRect(80, 120, 131, 21))
+        self.lastResultLabel = QLabel(self.centralwidget)
+        self.lastResultLabel.setObjectName(u"lastResultLabel")
+        self.lastResultLabel.setGeometry(QRect(80, 120, 131, 21))
         self.timeProductionTextBrowser = QTextBrowser(self.centralwidget)
         self.timeProductionTextBrowser.setObjectName(u"timeProductionTextBrowser")
         self.timeProductionTextBrowser.setGeometry(QRect(1170, 600, 181, 31))
-        self.widget = QWidget(self.centralwidget)
-        self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(10, 140, 241, 688))
-        self.lastResultQFrom = QFormLayout(self.widget)
+        self.layoutWidget = QWidget(self.centralwidget)
+        self.layoutWidget.setObjectName(u"layoutWidget")
+        self.layoutWidget.setGeometry(QRect(30, 140, 211, 361))
+        self.lastResultQFrom = QFormLayout(self.layoutWidget)
         self.lastResultQFrom.setObjectName(u"lastResultQFrom")
         self.lastResultQFrom.setSizeConstraint(QLayout.SetDefaultConstraint)
         self.lastResultQFrom.setFieldGrowthPolicy(QFormLayout.ExpandingFieldsGrow)
@@ -87,17 +87,17 @@ class Ui_MainWindow(object):
         self.lastResultQFrom.setHorizontalSpacing(15)
         self.lastResultQFrom.setVerticalSpacing(18)
         self.lastResultQFrom.setContentsMargins(22, 12, 18, 14)
-        self.testN1Label = QLabel(self.widget)
+        self.testN1Label = QLabel(self.layoutWidget)
         self.testN1Label.setObjectName(u"testN1Label")
 
         self.lastResultQFrom.setWidget(0, QFormLayout.LabelRole, self.testN1Label)
 
-        self.testN2Label = QLabel(self.widget)
+        self.testN2Label = QLabel(self.layoutWidget)
         self.testN2Label.setObjectName(u"testN2Label")
 
         self.lastResultQFrom.setWidget(0, QFormLayout.FieldRole, self.testN2Label)
 
-        self.resultN1Label = QLabel(self.widget)
+        self.resultN1Label = QLabel(self.layoutWidget)
         self.resultN1Label.setObjectName(u"resultN1Label")
         self.resultN1Label.setEnabled(True)
         font = QFont()
@@ -108,95 +108,95 @@ class Ui_MainWindow(object):
 
         self.lastResultQFrom.setWidget(1, QFormLayout.LabelRole, self.resultN1Label)
 
-        self.resultN2Label = QLabel(self.widget)
+        self.resultN2Label = QLabel(self.layoutWidget)
         self.resultN2Label.setObjectName(u"resultN2Label")
         self.resultN2Label.setStyleSheet(u"background-color:rgb(170, 170, 127)")
 
         self.lastResultQFrom.setWidget(1, QFormLayout.FieldRole, self.resultN2Label)
 
-        self.testN3Label = QLabel(self.widget)
+        self.testN3Label = QLabel(self.layoutWidget)
         self.testN3Label.setObjectName(u"testN3Label")
 
         self.lastResultQFrom.setWidget(2, QFormLayout.LabelRole, self.testN3Label)
 
-        self.testN4Label = QLabel(self.widget)
+        self.testN4Label = QLabel(self.layoutWidget)
         self.testN4Label.setObjectName(u"testN4Label")
 
         self.lastResultQFrom.setWidget(2, QFormLayout.FieldRole, self.testN4Label)
 
-        self.resultN3Label = QLabel(self.widget)
+        self.resultN3Label = QLabel(self.layoutWidget)
         self.resultN3Label.setObjectName(u"resultN3Label")
         self.resultN3Label.setStyleSheet(u"background-color:rgb(170, 170, 127)")
 
         self.lastResultQFrom.setWidget(3, QFormLayout.LabelRole, self.resultN3Label)
 
-        self.resultN4Label = QLabel(self.widget)
+        self.resultN4Label = QLabel(self.layoutWidget)
         self.resultN4Label.setObjectName(u"resultN4Label")
         self.resultN4Label.setStyleSheet(u"background-color:rgb(170, 170, 127)")
 
         self.lastResultQFrom.setWidget(3, QFormLayout.FieldRole, self.resultN4Label)
 
-        self.testN5Label = QLabel(self.widget)
+        self.testN5Label = QLabel(self.layoutWidget)
         self.testN5Label.setObjectName(u"testN5Label")
 
         self.lastResultQFrom.setWidget(4, QFormLayout.LabelRole, self.testN5Label)
 
-        self.testN6Label = QLabel(self.widget)
+        self.testN6Label = QLabel(self.layoutWidget)
         self.testN6Label.setObjectName(u"testN6Label")
 
         self.lastResultQFrom.setWidget(4, QFormLayout.FieldRole, self.testN6Label)
 
-        self.resultN5Label = QLabel(self.widget)
+        self.resultN5Label = QLabel(self.layoutWidget)
         self.resultN5Label.setObjectName(u"resultN5Label")
         self.resultN5Label.setStyleSheet(u"background-color:rgb(170, 170, 127)")
 
         self.lastResultQFrom.setWidget(5, QFormLayout.LabelRole, self.resultN5Label)
 
-        self.resultN6Label = QLabel(self.widget)
+        self.resultN6Label = QLabel(self.layoutWidget)
         self.resultN6Label.setObjectName(u"resultN6Label")
         self.resultN6Label.setStyleSheet(u"background-color:rgb(170, 170, 127)")
 
         self.lastResultQFrom.setWidget(5, QFormLayout.FieldRole, self.resultN6Label)
 
-        self.testN7Label = QLabel(self.widget)
+        self.testN7Label = QLabel(self.layoutWidget)
         self.testN7Label.setObjectName(u"testN7Label")
 
         self.lastResultQFrom.setWidget(6, QFormLayout.LabelRole, self.testN7Label)
 
-        self.testN8Label = QLabel(self.widget)
+        self.testN8Label = QLabel(self.layoutWidget)
         self.testN8Label.setObjectName(u"testN8Label")
 
         self.lastResultQFrom.setWidget(6, QFormLayout.FieldRole, self.testN8Label)
 
-        self.resultN7Label = QLabel(self.widget)
+        self.resultN7Label = QLabel(self.layoutWidget)
         self.resultN7Label.setObjectName(u"resultN7Label")
         self.resultN7Label.setStyleSheet(u"background-color:rgb(170, 170, 127)")
 
         self.lastResultQFrom.setWidget(7, QFormLayout.LabelRole, self.resultN7Label)
 
-        self.resultN8Label = QLabel(self.widget)
+        self.resultN8Label = QLabel(self.layoutWidget)
         self.resultN8Label.setObjectName(u"resultN8Label")
         self.resultN8Label.setStyleSheet(u"background-color:rgb(170, 170, 127)")
 
         self.lastResultQFrom.setWidget(7, QFormLayout.FieldRole, self.resultN8Label)
 
-        self.validationN1Label = QLabel(self.widget)
+        self.validationN1Label = QLabel(self.layoutWidget)
         self.validationN1Label.setObjectName(u"validationN1Label")
 
         self.lastResultQFrom.setWidget(8, QFormLayout.LabelRole, self.validationN1Label)
 
-        self.validationN2Label = QLabel(self.widget)
+        self.validationN2Label = QLabel(self.layoutWidget)
         self.validationN2Label.setObjectName(u"validationN2Label")
 
         self.lastResultQFrom.setWidget(8, QFormLayout.FieldRole, self.validationN2Label)
 
-        self.resultValidationN1Label = QLabel(self.widget)
+        self.resultValidationN1Label = QLabel(self.layoutWidget)
         self.resultValidationN1Label.setObjectName(u"resultValidationN1Label")
         self.resultValidationN1Label.setStyleSheet(u"background-color:rgb(170, 170, 127)")
 
         self.lastResultQFrom.setWidget(9, QFormLayout.LabelRole, self.resultValidationN1Label)
 
-        self.resultValidationN2Label = QLabel(self.widget)
+        self.resultValidationN2Label = QLabel(self.layoutWidget)
         self.resultValidationN2Label.setObjectName(u"resultValidationN2Label")
         self.resultValidationN2Label.setStyleSheet(u"background-color:rgb(170, 170, 127)")
 
@@ -215,29 +215,9 @@ class Ui_MainWindow(object):
         self.unitsOutLabel.raise_()
         self.priorityRailLabel.raise_()
         self.timeProductionLabel.raise_()
-        self.label_7.raise_()
-        self.testN1Label.raise_()
-        self.testN2Label.raise_()
-        self.testN4Label.raise_()
-        self.testN3Label.raise_()
-        self.testN5Label.raise_()
-        self.testN6Label.raise_()
-        self.testN8Label.raise_()
-        self.testN7Label.raise_()
-        self.validationN1Label.raise_()
-        self.validationN2Label.raise_()
-        self.resultN2Label.raise_()
-        self.resultN1Label.raise_()
-        self.resultN3Label.raise_()
-        self.resultN4Label.raise_()
-        self.resultN5Label.raise_()
-        self.resultN6Label.raise_()
-        self.resultN7Label.raise_()
-        self.resultN8Label.raise_()
-        self.resultValidationN1Label.raise_()
-        self.resultValidationN2Label.raise_()
+        self.lastResultLabel.raise_()
         self.timeProductionTextBrowser.raise_()
-        self.widget.raise_()
+        self.layoutWidget.raise_()
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
         self.menubar.setGeometry(QRect(0, 0, 1568, 22))
@@ -269,7 +249,7 @@ class Ui_MainWindow(object):
         self.unitsOutLabel.setText(QCoreApplication.translate("MainWindow", u"Piezas Salida", None))
         self.priorityRailLabel.setText(QCoreApplication.translate("MainWindow", u"Prioridad del riel", None))
         self.timeProductionLabel.setText(QCoreApplication.translate("MainWindow", u"Tiempo de produccion ", None))
-        self.label_7.setText(QCoreApplication.translate("MainWindow", u"Resultados previos ", None))
+        self.lastResultLabel.setText(QCoreApplication.translate("MainWindow", u"Resultados previos ", None))
         self.timeProductionTextBrowser.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
