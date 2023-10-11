@@ -7,7 +7,7 @@ from Phidget22.StepperControlMode import StepperControlMode
 from Phidget22.PhidgetException import PhidgetException
 from time import sleep
 import asyncio
-import concurrent.futures
+from concurrent.futures import ThreadPoolExecutor
 global devicesSerialNumbersTester, devicesSerialNumbersValidation, ValidationRielSingle
 
 devicesSerialNumbersTester = {
@@ -21,7 +21,7 @@ devicesSerialNumbersTester = {
         "Phidgets1067_Stepper_Riel_02": "720464",
         "Phidgets1067_Stepper_Vertical_02": "720476",
         "Phidgets1067_Stepper_Riel_03": "720493",
-        "Phidgets1067_Stepper_Vertical_03": "720666",
+        "Phidgets1067_Stepper_Vertical_03": "720583",
         "Phidgets1067_Stepper_Riel_04": "720536",
         "Phidgets1067_Stepper_Vertical_04": "615347",
 }
@@ -134,58 +134,90 @@ async def runOutput(digitalOutput):
             await outputOn(outputs)
             await outputOff(outputs)
 
-async def testStepperEncoder(stepper_Test_Encoder,encoder_Test,digital_Inputs:list,first_board_Position:bool):
-    encoderTest = encoder_Test
+async def testStepperEncoder(stepper_Test_Encoder,encoder_Test,digital_Inputs:list,first_board_Position:bool,move_Unit:int):
     stepperTest = stepper_Test_Encoder
+    digitalInputs = digital_Inputs
+    boardPosition = first_board_Position
+    encoderTest = encoder_Test
+    currenPosition = encoderTest.getPosition()
+    changePistionHome = False
+     
+    if boardPosition == True:
+        homeVertical  = digitalInputs[5]
+        homeVerticalFlag = homeVertical.getState()
+        velocity = 1500
+        moveInt = currenPosition + (move_Unit* 14.48)
 
-    encoder01_position = encoderTest.getPosition()
-    giro = 0
+    else:
+        homeVertical  = digitalInputs[13]
+        homeVerticalFlag = homeVertical.getState() 
+        velocity = -1500 
+        moveInt = currenPosition - (move_Unit* 14.48)
     while True:
-        encoder01_position = encoderTest.getPosition()
-        print(encoder01_position)
-        stepperTest.setEngaged(True)
-        if giro == 0 :
-            stepperTest.setControlMode(StepperControlMode.CONTROL_MODE_RUN)
-            stepperTest.setVelocityLimit(1500)
-            if encoder01_position >= 100 * 14.48:
-                stepperTest.setEngaged(False)
-                sleep(1)
-                giro = 1
+        if (homeVerticalFlag ==True and changePistionHome == True):
+            stepperTest.setEngaged(False)            
+            break
         else:
             stepperTest.setControlMode(StepperControlMode.CONTROL_MODE_RUN)
-            stepperTest.setVelocityLimit(-1500)
-            if encoder01_position <= 0:
-                stepperTest.setEngaged(False)
-                sleep(1)
-                giro = 0
-                break
-
-async def testStepperEncoderHome(stepper_Test_Encoder,digital_Inputs:list,first_board_Position:bool):
-
+            if move_Unit > 0:
+                stepperTest.setVelocityLimit(velocity)
+            else:
+                stepperTest.setVelocityLimit(-velocity)
+            stepperTest.setEngaged(True)
+            homeVerticalFlag = homeVertical.getState()
+            encoder01_position = encoderTest.getPosition()
+            print(encoder01_position)
+            if boardPosition == True:
+                if ((encoder01_position >= moveInt and move_Unit > 0) or (encoder01_position <= moveInt and move_Unit < 0)):
+                    stepperTest.setEngaged(False)
+                    print("llegue")
+                    sleep(1) 
+                    break
+            else:
+                if ((encoder01_position <= moveInt and move_Unit > 0) or (encoder01_position >= moveInt and move_Unit < 0)):
+                    stepperTest.setEngaged(False)
+                    print("llegue")
+                    sleep(1) 
+                    break
+        if (homeVerticalFlag == False ):
+            changePistionHome = True
+        
+    
+async def testStepperEncoderHome(stepper_Test_Encoder,encoder_Test,digital_Inputs:list,first_board_Position:bool):
+    encoderTest = encoder_Test
     stepperTest = stepper_Test_Encoder
     digitalInputs = digital_Inputs
     boardPosition = first_board_Position
     if boardPosition == True:
         homeVertical  = digitalInputs[5]
-        homeVerticalFlag = homeVertical.getState() 
+        homeVerticalFlag = homeVertical.getState()
+        velocity = -1500 
     else:
         homeVertical  = digitalInputs[13]
         homeVerticalFlag = homeVertical.getState() 
+        velocity = 1500 
+
     while True:
         if homeVerticalFlag ==True:
+            offsetM1 = -(stepperTest.getPosition())
+           # print(offsetM1)
+            stepperTest.addPositionOffset(offsetM1)
+            position_Stepper = stepperTest.getPosition()
+           # print(position_Stepper)
             stepperTest.setEngaged(False)            
             break
         else:
             stepperTest.setControlMode(StepperControlMode.CONTROL_MODE_RUN)
-            stepperTest.setVelocityLimit(-1500)
+            stepperTest.setVelocityLimit(velocity)
             stepperTest.setEngaged(True)
             homeVerticalFlag = homeVertical.getState() 
-
+    encoderTest.setPosition(0)
 async def testStepperHome(stepper_Test, digital_Inputs:list,first_board_Position:bool):
     
     stepperTest = stepper_Test
     digitalInputs = digital_Inputs
     boardPosition = first_board_Position
+
     if boardPosition == True:
         homeVertical  = digitalInputs[6]
         homeVerticalFlag = homeVertical.getState() 
@@ -195,15 +227,17 @@ async def testStepperHome(stepper_Test, digital_Inputs:list,first_board_Position
     while homeVerticalFlag == False:
         stepperTest.setControlMode(StepperControlMode.CONTROL_MODE_STEP)
         stepperTest.setEngaged(True)
-        stepperTest.setTargetPosition(-3200 * 10)
+        stepperTest.setTargetPosition(-4200 * 10)
 
         homeVerticalFlag = homeVertical.getState() 
         if homeVerticalFlag == True:
             stepperTest.setEngaged(False)
-            Position_Stepper04 = stepperTest.getPosition()
-            offsetM4 = -(Position_Stepper04)
+            Position_Stepper = stepperTest.getPosition()
+            offsetM4 = -(Position_Stepper)
+            print(Position_Stepper)
+            #stepperTest.setCurrentPosition(0)
             break
-    sleep(0.1)
+
 
     # stepperTest.addPositionOffset(offsetM4)
     # Position_Stepper04 = stepperTest.getPosition()
@@ -214,38 +248,28 @@ async def testStepperHome(stepper_Test, digital_Inputs:list,first_board_Position
     # Position_Stepper04 = stepperTest.getPosition()
     # stepperTest.setEngaged(True)
 
-async def testStepper(stepper_Test,digital_Inputs:list,first_board_Position:bool):
+async def testStepper(stepper_Test,digital_Inputs:list,first_board_Position:bool,move_Unit:int):
     stepperTest = stepper_Test
     stepper_position = stepperTest.getPosition()
-    moveStepper = 500
+    moveStepper = move_Unit
+    changePistionHome = False
 
     stepperTest.setControlMode(StepperControlMode.CONTROL_MODE_STEP)
     stepperTest.setEngaged(True)
         
-    SHElevadorValidador01 = inputs2[14].getState()
-    while SHElevadorValidador01 == False:
-        while True:
-            stepperTest.addPositionOffset(0)
-            stepperTest.setTargetPosition(moveStepper * 10)
-            
-    
-            positionCurrent = stepperTest.getPosition()
-            print(positionCurrent)
-            if positionCurrent >= moveStepper:
-                stepperTest.addPositionOffset(0)
-                stepperTest.setTargetPosition(-moveStepper * 10)
-                sleep(0.2)
+    while True:
+        SHElevadorValidador01 = inputs2[14].getState()
+        currenPosition = stepperTest.getPosition()
+        if (SHElevadorValidador01 == True and changePistionHome == True) or currenPosition == (moveStepper*10) :
+            break
+        stepperTest.addPositionOffset(0)
+        stepperTest.setTargetPosition(moveStepper * 10)
+        
 
-                break
-
-            SHElevadorValidador01 = inputs2[14].getState()
-            if SHElevadorValidador01 == True:
-                stepperTest.setEngaged(False)
-                Position_Stepper04 = stepperTest.getPosition()
-                offsetM4 = -(Position_Stepper04)
-                break
-    sleep(0.1)
-
+        positionCurrent = stepperTest.getPosition()
+        print(positionCurrent)
+        if SHElevadorValidador01 == False:
+            changePistionHome = True
 async def testGrepper(digital_Outputs:list,digital_Inputs:list,first_board_Position:bool):
     boardPosition = first_board_Position
     digitalOutputs = digital_Outputs
@@ -355,14 +379,23 @@ async def initialization(devicesSerialNumbers: dict):
     serialNumber = int(devicesSerialNumbers["Phidget1012_Securitas_03"]) # MOD D
     outputs3,inputs3 = startIO(serialNumber)
     #movimiento de motores
-    # serialNumberEncoderA = int(devicesSerialNumbers["Phidgets1047_Encoder_01"]) # Encoder
-    # EncoderA = startEncoder(serialNumberEncoderA)
-    # steppersEncoder,steppersSingle = startSteppers(devicesSerialNumbers)
-    await outputOn(outputs)
+    serialNumberEncoderA = int(devicesSerialNumbers["Phidgets1047_Encoder_01"]) # Encoder
+    EncoderA = startEncoder(serialNumberEncoderA)
+    steppersEncoder,steppersSingle = startSteppers(devicesSerialNumbers)
+    position = True
     await outputOn(outputs3)
-    # await testGrepper(outputs,inputs,first_board_Position = True)
-    # await testStepperHome(steppersSingle[0],inputs,first_board_Position = True)
-    # await testStepperEncoderHome(steppersEncoder[0],inputs,first_board_Position=True)
+    # await testGrepper(outputs,inputs,first_board_Position = position)
+    # await testGrepper(outputs,inputs,first_board_Position = False)
+    # await testGrepper(outputs2,inputs2,first_board_Position = position)
+    # await testGrepper(outputs2,inputs2,first_board_Position = False)
+    await testStepperHome(steppersSingle[0],inputs,first_board_Position = position)
+    await testStepperHome(steppersSingle[1],inputs,first_board_Position = False)
+    await testStepperHome(steppersSingle[2],inputs2,first_board_Position = position)
+    await testStepperHome(steppersSingle[3],inputs2,first_board_Position = False)
+    await testStepperEncoderHome(steppersEncoder[0],EncoderA[0],inputs,first_board_Position = position)
+    await testStepperEncoderHome(steppersEncoder[1],EncoderA[1],inputs,first_board_Position = False)
+    await testStepperEncoderHome(steppersEncoder[2],EncoderA[2],inputs2,first_board_Position = position)
+    await testStepperEncoderHome(steppersEncoder[3],EncoderA[3],inputs2,first_board_Position = False)
     sleep(2)
     # await testStepperEncoder(steppersEncoder[0],EncoderA[0],inputs,first_board_Position = True)
     # await testInputs(inputs,first_board_Position=True)
@@ -384,20 +417,45 @@ async def testModTester(devicesSerialNumbers: dict):
     if devicesSerialNumbers["MOD"] == "VALIDATION":
         pass
 
-async def main() :   
-   
-    await initialization(devicesSerialNumbersTester)
-    # with concurrent.futures.ThreadPoolExecutor() as executor:
-    #     loop = asyncio.get_event_loop()
-    #     await asyncio.gather(
-    #         loop.run_in_executor(executor, lambda: asyncio.run(testGrepper())),
-    #         #loop.run_in_executor(executor, lambda: asyncio.run(testStepper(stepper4B,serialNumberStepper4B))),
-    #         #loop.run_in_executor(executor, lambda: asyncio.run(testStepperEncoder(stepper1B, serialNumberStepper1B, encoderA1, channelEncoderA1))),
-    #         #loop.run_in_executor(executor, lambda: asyncio.run(testStepperEncoder(stepper3B, serialNumberStepper3B, encoderA2, channelEncoderA2))),
-    #         # loop.run_in_executor(executor, lambda: asyncio.run(testStepperEncoder(stepper1C, serialNumberStepper1C, encoderA3, channelEncoderA3))),
-    #         # loop.run_in_executor(executor, lambda: asyncio.run(testStepperEncoder(stepper3C, serialNumberStepper3C, encoderA4, channelEncoderA4)))
-    #     )
+async def sequenceTestRiel(stepper_Single,stepper_Encoder,encoder_Test,digital_Inputs:list,digital_Outputs:list,move_Units:int,first_board_Position:bool):
+    stepperTestEncoder = stepper_Encoder
+    stepperTestSingle = stepper_Single
+    encoderTest = encoder_Test
+    digitalInputs = digital_Inputs
+    digitalOutputs = digital_Outputs
+    position =  first_board_Position 
+    move = move_Units
+    while True:
+        await testStepperEncoder(stepperTestEncoder,encoderTest,digitalInputs,position,move)
+        await testStepper(stepperTestSingle,digitalInputs,position,500)
+        await testGrepper(digitalOutputs,digitalInputs,first_board_Position = position)
+        await testStepper(stepperTestSingle,digitalInputs,position,-500)
+        await testStepperEncoder(stepperTestEncoder,encoderTest,digitalInputs,position,-move)    
 
+async def riel1():
+    move = 100
+    await sequenceTestRiel(steppersSingle[0],steppersEncoder[0],EncoderA[0],inputs,outputs,move,first_board_Position=True)
+async def riel2():
+    move = -100
+    await sequenceTestRiel(steppersSingle[1],steppersEncoder[1],EncoderA[1],inputs,outputs,move,first_board_Position=False)
+async def riel3():
+    move = 100
+    await sequenceTestRiel(steppersSingle[2],steppersEncoder[2],EncoderA[2],inputs2,outputs2,move,first_board_Position=True)
+async def riel4():
+    move = -100
+    await sequenceTestRiel(steppersSingle[3],steppersEncoder[3],EncoderA[3],inputs2,outputs2,move,first_board_Position=False)
+
+async def main() :   
+    global inputs, outputs, inputs2, outputs2,inputs3,outputs3,inputs4,outputs4,offsetB4,EncoderA,steppersEncoder,steppersSingle
+    
+    position = True
+    move = 100
+    await initialization(devicesSerialNumbersTester)
+    #await riel1()
+    
+    
+    executor = ThreadPoolExecutor(max_workers=15)
+    await executor.submit(riel1)
 
 
 if __name__ == "__main__":

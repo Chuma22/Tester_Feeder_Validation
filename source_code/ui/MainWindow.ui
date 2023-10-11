@@ -21,7 +21,7 @@
     <property name="geometry">
      <rect>
       <x>70</x>
-      <y>510</y>
+      <y>560</y>
       <width>121</width>
       <height>51</height>
      </rect>
@@ -34,7 +34,7 @@
     <property name="geometry">
      <rect>
       <x>70</x>
-      <y>590</y>
+      <y>630</y>
       <width>121</width>
       <height>51</height>
      </rect>
@@ -102,7 +102,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <property name="geometry">
      <rect>
       <x>70</x>
-      <y>670</y>
+      <y>700</y>
       <width>121</width>
       <height>51</height>
      </rect>
@@ -140,6 +140,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
       <height>20</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="text">
      <string>Piezas Entrada</string>
     </property>
@@ -152,6 +158,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
       <width>111</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>Piezas Salida</string>
@@ -166,6 +178,12 @@ li.checked::marker { content: &quot;\2612&quot;; }
       <height>20</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="text">
      <string>Prioridad del riel</string>
     </property>
@@ -173,11 +191,17 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <widget class="QLabel" name="timeProductionLabel">
     <property name="geometry">
      <rect>
-      <x>1180</x>
+      <x>1190</x>
       <y>560</y>
       <width>141</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="text">
      <string>Tiempo de produccion </string>
@@ -187,13 +211,19 @@ li.checked::marker { content: &quot;\2612&quot;; }
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>120</y>
-      <width>131</width>
+      <y>110</y>
+      <width>141</width>
       <height>21</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="text">
-     <string>Resultados previos </string>
+     <string>Resultados Previos</string>
     </property>
    </widget>
    <widget class="QTextBrowser" name="timeProductionTextBrowser">
@@ -219,10 +249,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>10</x>
       <y>140</y>
-      <width>211</width>
-      <height>361</height>
+      <width>261</width>
+      <height>411</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="lastResultQFrom">
@@ -233,7 +263,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
       <enum>QFormLayout::ExpandingFieldsGrow</enum>
      </property>
      <property name="rowWrapPolicy">
-      <enum>QFormLayout::WrapLongRows</enum>
+      <enum>QFormLayout::DontWrapRows</enum>
      </property>
      <property name="labelAlignment">
       <set>Qt::AlignBottom|Qt::AlignHCenter</set>
@@ -261,6 +291,11 @@ li.checked::marker { content: &quot;\2612&quot;; }
      </property>
      <item row="0" column="0">
       <widget class="QLabel" name="testN1Label">
+       <property name="font">
+        <font>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Tester Nido1</string>
        </property>
@@ -268,6 +303,11 @@ li.checked::marker { content: &quot;\2612&quot;; }
      </item>
      <item row="0" column="1">
       <widget class="QLabel" name="testN2Label">
+       <property name="font">
+        <font>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Tester Nido 2</string>
        </property>
@@ -280,6 +320,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
        </property>
        <property name="font">
         <font>
+         <pointsize>14</pointsize>
          <kerning>true</kerning>
         </font>
        </property>
@@ -290,22 +331,32 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <string notr="true">background-color:rgb(170, 170, 127)</string>
        </property>
        <property name="text">
-        <string>Null</string>
+        <string>   Null    </string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
       <widget class="QLabel" name="resultN2Label">
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
         <string notr="true">background-color:rgb(170, 170, 127)</string>
        </property>
        <property name="text">
-        <string>Null</string>
+        <string>   Null    </string>
        </property>
       </widget>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="testN3Label">
+       <property name="font">
+        <font>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Tester Nido 3</string>
        </property>
@@ -313,6 +364,11 @@ li.checked::marker { content: &quot;\2612&quot;; }
      </item>
      <item row="2" column="1">
       <widget class="QLabel" name="testN4Label">
+       <property name="font">
+        <font>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Tester Nido 4</string>
        </property>
@@ -320,26 +376,41 @@ li.checked::marker { content: &quot;\2612&quot;; }
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="resultN3Label">
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
         <string notr="true">background-color:rgb(170, 170, 127)</string>
        </property>
        <property name="text">
-        <string>Null</string>
+        <string>   Null    </string>
        </property>
       </widget>
      </item>
      <item row="3" column="1">
       <widget class="QLabel" name="resultN4Label">
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
         <string notr="true">background-color:rgb(170, 170, 127)</string>
        </property>
        <property name="text">
-        <string>Null</string>
+        <string>   Null    </string>
        </property>
       </widget>
      </item>
      <item row="4" column="0">
       <widget class="QLabel" name="testN5Label">
+       <property name="font">
+        <font>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Tester Nido 5</string>
        </property>
@@ -347,6 +418,11 @@ li.checked::marker { content: &quot;\2612&quot;; }
      </item>
      <item row="4" column="1">
       <widget class="QLabel" name="testN6Label">
+       <property name="font">
+        <font>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Tester Nido 6</string>
        </property>
@@ -354,26 +430,41 @@ li.checked::marker { content: &quot;\2612&quot;; }
      </item>
      <item row="5" column="0">
       <widget class="QLabel" name="resultN5Label">
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
         <string notr="true">background-color:rgb(170, 170, 127)</string>
        </property>
        <property name="text">
-        <string>Null</string>
+        <string>   Null    </string>
        </property>
       </widget>
      </item>
      <item row="5" column="1">
       <widget class="QLabel" name="resultN6Label">
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
         <string notr="true">background-color:rgb(170, 170, 127)</string>
        </property>
        <property name="text">
-        <string>Null</string>
+        <string>   Null    </string>
        </property>
       </widget>
      </item>
      <item row="6" column="0">
       <widget class="QLabel" name="testN7Label">
+       <property name="font">
+        <font>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Tester Nido 7</string>
        </property>
@@ -381,6 +472,11 @@ li.checked::marker { content: &quot;\2612&quot;; }
      </item>
      <item row="6" column="1">
       <widget class="QLabel" name="testN8Label">
+       <property name="font">
+        <font>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Tester Nido 8</string>
        </property>
@@ -388,26 +484,41 @@ li.checked::marker { content: &quot;\2612&quot;; }
      </item>
      <item row="7" column="0">
       <widget class="QLabel" name="resultN7Label">
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
         <string notr="true">background-color:rgb(170, 170, 127)</string>
        </property>
        <property name="text">
-        <string>Null</string>
+        <string>   Null    </string>
        </property>
       </widget>
      </item>
      <item row="7" column="1">
       <widget class="QLabel" name="resultN8Label">
+       <property name="font">
+        <font>
+         <pointsize>15</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
         <string notr="true">background-color:rgb(170, 170, 127)</string>
        </property>
        <property name="text">
-        <string>Null</string>
+        <string>   Null    </string>
        </property>
       </widget>
      </item>
      <item row="8" column="0">
       <widget class="QLabel" name="validationN1Label">
+       <property name="font">
+        <font>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Validacion Nido 1</string>
        </property>
@@ -415,28 +526,43 @@ li.checked::marker { content: &quot;\2612&quot;; }
      </item>
      <item row="8" column="1">
       <widget class="QLabel" name="validationN2Label">
+       <property name="font">
+        <font>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
-        <string>Validacion Nido2</string>
+        <string>Validacion Nido 2</string>
        </property>
       </widget>
      </item>
      <item row="9" column="0">
       <widget class="QLabel" name="resultValidationN1Label">
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
         <string notr="true">background-color:rgb(170, 170, 127)</string>
        </property>
        <property name="text">
-        <string>Null</string>
+        <string>   Null    </string>
        </property>
       </widget>
      </item>
      <item row="9" column="1">
       <widget class="QLabel" name="resultValidationN2Label">
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
        <property name="styleSheet">
         <string notr="true">background-color:rgb(170, 170, 127)</string>
        </property>
        <property name="text">
-        <string>Null</string>
+        <string>   Null    </string>
        </property>
       </widget>
      </item>
