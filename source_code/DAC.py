@@ -12,18 +12,31 @@ global devicesSerialNumbersTester, devicesSerialNumbersValidation, ValidationRie
 
 devicesSerialNumbersTester = {
         "MOD": "TESTER",
-        "Phidget1012_Control_01": "692538",
-        "Phidget1012_Control_02": "692440",
-        "Phidget1012_Securitas_03": "692552",
-        "Phidgets1047_Encoder_01": "590369",
-        "Phidgets1067_Stepper_Riel_01": "720437",
-        "Phidgets1067_Stepper_Vertical_01": "720489",
-        "Phidgets1067_Stepper_Riel_02": "720464",
-        "Phidgets1067_Stepper_Vertical_02": "720476",
-        "Phidgets1067_Stepper_Riel_03": "720493",
-        "Phidgets1067_Stepper_Vertical_03": "720583",
-        "Phidgets1067_Stepper_Riel_04": "720536",
-        "Phidgets1067_Stepper_Vertical_04": "615347",
+        "Phidget1012_Control_01": "692542",
+        "Phidget1012_Control_02": "692297",
+        "Phidget1012_Securitas_03": "692302",
+        "Phidgets1047_Encoder_01": "590298",
+        "Phidgets1067_Stepper_Riel_01": "615358",
+        "Phidgets1067_Stepper_Vertical_01": "720540",
+        "Phidgets1067_Stepper_Riel_02": "615372",
+        "Phidgets1067_Stepper_Vertical_02": "720511",
+        "Phidgets1067_Stepper_Riel_03": "720491",
+        "Phidgets1067_Stepper_Vertical_03": "615354",
+        "Phidgets1067_Stepper_Riel_04": "720538",
+        "Phidgets1067_Stepper_Vertical_04": "720436",
+        # "MOD": "TESTER",
+        # "Phidget1012_Control_01": "692538",
+        # "Phidget1012_Control_02": "692440",
+        # "Phidget1012_Securitas_03": "692552",
+        # "Phidgets1047_Encoder_01": "590369",
+        # "Phidgets1067_Stepper_Riel_01": "720437",
+        # "Phidgets1067_Stepper_Vertical_01": "720489",
+        # "Phidgets1067_Stepper_Riel_02": "720464",
+        # "Phidgets1067_Stepper_Vertical_02": "720476",
+        # "Phidgets1067_Stepper_Riel_03": "720493",
+        # "Phidgets1067_Stepper_Vertical_03": "720583",
+        # "Phidgets1067_Stepper_Riel_04": "720536",
+        # "Phidgets1067_Stepper_Vertical_04": "615347",
 }
 
 devicesSerialNumbersValidation = {
@@ -293,10 +306,11 @@ def testGrepper(digital_Outputs:list,digital_Inputs:list,first_board_Position:bo
         if grepperClose and stepCero:
             break
 
-def testInputs(digital_Inputs:list,first_board_Position:bool):
+def testInputs(digital_Inputs:list,digital_Outputs : list,first_board_Position:bool):
     
         boardPosition = first_board_Position
         digitalInputs = digital_Inputs
+        digitalOutputs = digital_Outputs
         step = 0
         print("Sensor de pieza en gripper")
 
@@ -318,6 +332,9 @@ def testInputs(digital_Inputs:list,first_board_Position:bool):
                     readInput = digitalInputs[2].getState()
                     if readInput == True:
                         print("OK")
+                        print("Se encendio interlock A")
+                        digitalOutputs[8].setState(1)
+                        
                         print("Sensor de Conveyor entrada ")
                         step = 3
                 if step == 3:
@@ -326,42 +343,137 @@ def testInputs(digital_Inputs:list,first_board_Position:bool):
                         print("OK ")
                         print("Sensor de Conveyor salida")
                         step = 4
-                if step == 4:#TODO modificar este parte para dos Phidgets
-                    readInput = digitalInputs[8].getState()
-                    if readInput == True:
-                        print("OK ")
-                        step = 0
-                        break                                 
+                        break
+                # if step == 4:#TODO modificar este parte para dos Phidgets
+                #     readInput = digitalInputs[8].getState()
+                #     if readInput == True:
+                #         print("OK ")
+                #         step = 0
+                #         break                                 
             else:
                 if step == 0:
                     readInput = digitalInputs[8].getState()
                     if readInput == True:
-                        print("Sensor de pieza en gripe energizado")
+                        print("OK")
+                        print("Señal de pieza PASS")
                         step = 1
                 if step == 1:
                     readInput = digitalInputs[9].getState()
                     if readInput == True:
-                        print("Señal de pieza PASS")
+                        print("OK")
+                        print("Señal de pieza FAIL")
                         step = 2
                 if step == 2:
                     readInput = digitalInputs[10].getState()
                     if readInput == True:
-                        print("Señal Pieza Fail")
+                        print("OK")
+                        print("Se encendio interlock A")
+                        digitalOutputs[9].setState(1)
+                        print("Sensor de Conveyor entrada ")
                         step = 3
                 if step == 3:
                     readInput = digitalInputs[15].getState()
                     if readInput == True:
-                        print("Sensor de Conveyor entrada energizado ")
+                        print("°°°°°°°Sistema Validado°°°°°°°°°")
                         step = 4
-                if step == 4:#TODO modificar este parte para dos Phidgets
-                    readInput = digitalInputs[8].getState()
-                    if readInput == True:
-                        print("Sensor de Conveyor salida energizado ")
-                        step = 0 
-                        break  
+                        break
+                # if step == 4:#TODO modificar este parte para dos Phidgets
+                #     readInput = digitalInputs[8].getState()
+                #     if readInput == True:
+                #         print("Sensor de Conveyor salida energizado ")
+                #         step = 0 
+                #         break  
             
+def testSecurity(digital_Inputs : list,digital_Ouputs : list):
+        digitalInputs = digital_Inputs
+        digitalOuputs = digital_Ouputs
+        position = False
+        position2 = False
+        step = 0
+        
+        print("Validando sensores reflectivos de salida")
+        print("Señal de salida de conveyor 01")
 
-    
+        while True:
+            if step == 0:
+                readInput = digitalInputs[0].getState()
+                if readInput == True:
+                    print("OK")
+                    print("Señal de salida de conveyor 02")
+                    step = 1
+            if step == 1:
+                readInput = digitalInputs[1].getState()
+                if readInput == True:
+                    print("OK")
+                    print("Señal de salida de conveyor 03")
+                    step = 2
+            if step == 2:
+                readInput = digitalInputs[2].getState()
+                if readInput == True:
+                    print("OK")
+                    print("Señal de salida de conveyor 04")
+                    step = 3
+            if step == 3:
+                readInput = digitalInputs[3].getState()
+                if readInput == True:   #TODO
+                    print("OK ")
+                    print("Puerta Nido 1 abrir puerta")
+                    step = 4
+            if step == 4:
+                readInput = digitalInputs[4].getState()
+                if readInput == True and not position:
+                    print("Cerrar puerta")
+                    position =  True
+                if readInput == False and position:
+                    print("OK")
+                    digitalOuputs[8].setState(1)
+                    print("Puerta Nido 2 abrir puerta")
+                    position = False
+                    step = 5
+            if step == 5:
+                readInput = digitalInputs[5].getState()
+                if readInput == True  and not position:
+                    print("Cerrar puerta")
+                    position =  True
+                if readInput == False and position:
+                    print("OK")
+                    digitalOuputs[9].setState(1)
+                    print("Puerta Nido 3 abrir puerta")
+                    position = False
+                    step = 6
+            if step == 6:
+                readInput = digitalInputs[6].getState()
+                if readInput == True  and not position:
+                    print("Cerrar puerta")
+                    position =  True
+                if readInput == False and position:
+                    print("OK")
+                    digitalOuputs[10].setState(1)
+                    print("Puerta Nido 4 abrir puerta")
+                    position = False
+                    step = 7
+            if step == 7:
+                readInput = digitalInputs[7].getState()
+                if readInput == True  and not position:
+                    print("cerrar puerta")
+                    position = True
+                if readInput == False and position:
+                    print("OK")
+                    digitalOuputs[11].setState(1)
+                    print("Abrir guarda fija")
+                    position = False
+                    step = 8                    
+            if step == 8:
+                readInput = digitalInputs[8].getState()
+                if readInput == True  and not position:
+                    print("Cerrar guarda fija ")
+                    position = True
+                if readInput == False and position:
+                    print("OK")
+                    print("°°°°°°°°°°°Validado°°°°°°°°°°°°°")
+                    position = False
+                    step = 10
+                    break
 def initialization(devicesSerialNumbers: dict):
     
     global inputs, outputs, inputs2, outputs2,inputs3,outputs3,inputs4,outputs4,offsetB4,EncoderA,steppersEncoder,steppersSingle
@@ -383,11 +495,11 @@ def initialization(devicesSerialNumbers: dict):
     EncoderA = startEncoder(serialNumberEncoderA)
     steppersEncoder,steppersSingle = startSteppers(devicesSerialNumbers)
     position = True
-    outputOn(outputs3)
-    # testGrepper(outputs,inputs,first_board_Position = position)
-    # testGrepper(outputs,inputs,first_board_Position = False)
+    testGrepper(outputs,inputs,first_board_Position = position)
+    testGrepper(outputs,inputs,first_board_Position = False)
     # testGrepper(outputs2,inputs2,first_board_Position = position)
-    # testGrepper(outputs2,inputs2,first_board_Position = False)
+    testGrepper(outputs2,inputs2,first_board_Position = False)
+    outputOn(outputs3)
     testStepperHome(steppersSingle[0],inputs,first_board_Position = position)
     testStepperHome(steppersSingle[1],inputs,first_board_Position = False)
     testStepperHome(steppersSingle[2],inputs2,first_board_Position = position)
@@ -396,9 +508,16 @@ def initialization(devicesSerialNumbers: dict):
     testStepperEncoderHome(steppersEncoder[1],EncoderA[1],inputs,first_board_Position = False)
     testStepperEncoderHome(steppersEncoder[2],EncoderA[2],inputs2,first_board_Position = position)
     testStepperEncoderHome(steppersEncoder[3],EncoderA[3],inputs2,first_board_Position = False)
-    sleep(2)
+    # sleep(2)
     # await testStepperEncoder(steppersEncoder[0],EncoderA[0],inputs,first_board_Position = True)
-    # await testInputs(inputs,first_board_Position=True)
+    outputOff(outputs3)
+    testInputs(inputs,outputs,first_board_Position=True)
+    testInputs(inputs,outputs,first_board_Position=False)
+    testInputs(inputs2,outputs2,first_board_Position=True)
+    testInputs(inputs2,outputs2,first_board_Position=False)
+    testSecurity(inputs3,outputs3)
+    print("Validado")
+
 
 def testModTester(devicesSerialNumbers: dict):
     global inputs, outputs, inputs2, outputs2,inputs3,outputs3,inputs4,outputs4,offsetB4,EncoderA,steppersEncoder,steppersSingle

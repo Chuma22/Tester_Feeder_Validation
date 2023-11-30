@@ -10,7 +10,7 @@ import asyncio
 from concurrent.futures import ThreadPoolExecutor
 
 device = "720523"
-moveStepper = -6000
+moveStepper = 6000 * 10
 velocity = 25000
 stepperTest = Stepper()
 stepperTest.setDeviceSerialNumber(int(device))
@@ -23,15 +23,16 @@ stepperTest.setEngaged(True)
 positionCurrent = 0
 while True:
     while True:
-        stepperTest.setTargetPosition(moveStepper * 10)
+        stepperTest.setTargetPosition(moveStepper)
         print(stepperTest.getPosition())
-        if -60000 >= stepperTest.getPosition():
+        if moveStepper <= stepperTest.getPosition():
             positionCurrent = stepperTest.getPosition()
+            newMoveStepper = moveStepper-positionCurrent
             break
     while True:
-        stepperTest.setTargetPosition((moveStepper * 10)-positionCurrent)
+        stepperTest.setTargetPosition(newMoveStepper)
         print(stepperTest.getPosition())
-        if 0 <= stepperTest.getPosition():
+        if 0 >= stepperTest.getPosition():
             positionCurrent = stepperTest.getPosition()
             break
 # stepperTest.setTargetPosition(-moveStepper * 10)
